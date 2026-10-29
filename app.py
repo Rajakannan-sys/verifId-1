@@ -3,6 +3,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE_DIR)
 
 from flask import Flask, render_template, request, session
+import html
 import json
 
 from model.predict import predict
@@ -89,7 +90,8 @@ def process():
     try:
         shap_result = get_top_shap_words(text)
     except Exception:
-        shap_result = {"html": text, "fake_words": [], "real_words": []}
+        # The result template renders explanation HTML with the safe filter.
+        shap_result = {"html": html.escape(text), "fake_words": [], "real_words": []}
 
     contact  = check_contact_info(text)
     keywords = analyze_keywords(text)
