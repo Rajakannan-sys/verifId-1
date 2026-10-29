@@ -2,7 +2,8 @@ import re
 
 SUSPICIOUS_EMAIL_DOMAINS = [
     "gmail.com", "yahoo.com", "hotmail.com", "outlook.com",
-    "rediffmail.com", "ymail.com", "mail.com"
+    "rediffmail.com", "ymail.com", "mail.com",
+    "protonmail.com", "aol.com", "icloud.com"
 ]
 
 def check_contact_info(text: str) -> dict:
@@ -29,6 +30,12 @@ def check_contact_info(text: str) -> dict:
     if "telegram" in text_lower:
         flags.append("Telegram contact — unusual for legitimate companies")
         score += 0.2
+
+    # Detect bare Telegram @handles (e.g. @jobs_bot, @recruiter123)
+    telegram_handles = re.findall(r"(?<![\w@])@[A-Za-z][\w]{4,31}\b", text)
+    if telegram_handles:
+        flags.append(f"Telegram-style @handle found: {telegram_handles[0]}")
+        score += 0.15
 
     return {
         "flags":        flags,
