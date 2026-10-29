@@ -54,3 +54,6 @@ uploads/*
 # Temporary / Scratch
 *.tmp
 *.log
+
+# Testing
+.pytest_cache/
