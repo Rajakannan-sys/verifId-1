@@ -127,6 +127,12 @@ class TestSeniorityDetection:
         ("Engineering Manager role", "manager"),
         ("Director of Engineering", "director"),
         ("Full Stack Developer", "default"),
+        ("International Senior Software Engineer", "senior"),
+        ("Internal tools developer", "default"),
+        ("Middleware developer", "default"),
+        ("Summer Internship opportunity", "intern"),
+        ("INTERN position", "intern"),
+        ("Senior-level Python Engineer", "senior"),
     ])
     def test_seniority_benchmark_lookup(self, text, expected):
         assert get_seniority(text) == expected
@@ -187,3 +193,9 @@ class TestSalaryAnomalyDetection:
         assert result["salary"] == 36000.0
         assert result["risk_score"] == 0.0
         assert "looks normal" in result["reason"]
+
+    def test_international_senior_role_uses_senior_benchmark(self):
+        result = check_salary_anomaly("International Senior Engineer. Salary: $160,000 per year.")
+        assert result["is_anomaly"] is False
+        assert result["risk_score"] == 0.0
+        assert "senior" in result["reason"]
