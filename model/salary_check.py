@@ -164,7 +164,9 @@ def extract_salary(text: str) -> float | None:
 def get_seniority(text: str) -> str:
     text_lower = text.lower()
     for key in SALARY_BENCHMARKS:
-        if key in text_lower:
+        # Match role words, not substrings such as "intern" in "international".
+        pattern = r"\bintern(?:ship)?\b" if key == "intern" else rf"\b{key}\b"
+        if re.search(pattern, text_lower):
             return key
     return "default"
 
