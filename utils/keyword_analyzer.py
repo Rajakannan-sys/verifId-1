@@ -1,9 +1,12 @@
 import re
 from collections import Counter
 
-MONEY_KEYWORDS   = ["earn","salary","income","payment","paid","weekly","daily","monthly","guaranteed","unlimited"]
-URGENCY_KEYWORDS = ["urgent","immediately","asap","limited seats","apply now","hurry","last date","deadline","today only"]
-VAGUE_KEYWORDS   = ["good communication","team player","dynamic","passionate","self motivated","go-getter","multitask"]
+MONEY_KEYWORDS   = ["earn","salary","income","payment","paid","weekly","daily","monthly",
+                    "guaranteed","unlimited","commission","referral","bonus","cash"]
+URGENCY_KEYWORDS = ["urgent","immediately","asap","limited seats","apply now","hurry",
+                    "last date","deadline","today only","act now","positions filling fast"]
+VAGUE_KEYWORDS   = ["good communication","team player","dynamic","passionate","self motivated",
+                    "go-getter","multitask","work from home","no experience","be your own boss"]
 
 def analyze_keywords(text: str) -> dict:
     text_lower = text.lower()
